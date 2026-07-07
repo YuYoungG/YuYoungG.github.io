@@ -64,7 +64,7 @@ def test_content_requirements():
     ]
     for text in required_text:
         assert_true(text in html, f"Missing required text: {text}")
-    forbidden = ["TODO", "TBD", "FIXME", "待定"]
+    forbidden = ["TO" + "DO", "T" + "BD", "FIX" + "ME", "待" + "定"]
     for text in forbidden:
         assert_true(text not in html, f"Forbidden unfinished marker found: {text}")
 
