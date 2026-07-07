@@ -69,6 +69,32 @@ def test_content_requirements():
         assert_true(text not in html, f"Forbidden unfinished marker found: {text}")
 
 
+def test_resume_content_is_public_safe():
+    html = read("index.html")
+    required_text = [
+        "黄宇阳",
+        "软件工程专业研究生在读",
+        "华东师范大学软件工程专业研0",
+        "质量效能工具",
+        "移动应用分析与测试",
+        "1907902090@qq.com",
+        "https://github.com/YuYoungG",
+        "u2_webview",
+        "cat 工具自动化测试",
+        "言趣空间",
+    ]
+    for text in required_text:
+        assert_true(text in html, f"Missing resume content: {text}")
+
+    private_text = [
+        "132" + "62551027",
+        "2004" + ".10",
+        "huang" + "1907902090",
+    ]
+    for text in private_text:
+        assert_true(text not in html, f"Private resume content must not be public: {text}")
+
+
 def test_links_are_safe_and_useful():
     html = read("index.html")
     parser = SiteParser()
@@ -124,6 +150,7 @@ def run_all():
     tests = [
         test_html_structure,
         test_content_requirements,
+        test_resume_content_is_public_safe,
         test_links_are_safe_and_useful,
         test_css_responsive_and_accessible,
         test_javascript_progressive_enhancement,
